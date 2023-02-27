@@ -1,0 +1,6 @@
+[format]
+param = "json"
+result = "auto"
+
+[path]
+result = "/tmp/results"

@@ -1,0 +1,5 @@
+build-variables:
+    global:
+      - BUCKET_NAME=
+      - AWS_CERT=
+      - AWS_SECRET=

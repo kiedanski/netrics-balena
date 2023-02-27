@@ -1,0 +1,21 @@
+version: '2'
+
+volumes:
+  data:
+
+services:
+  netrics:
+    build: netrics/
+    command: netrics control --continual
+    network_mode: host
+    volumes:
+      - data:/tmp/results
+    restart: always
+
+  server:
+    build:
+      context: uploads3/
+    network_mode: host
+    volumes:
+      - data:/data
+
