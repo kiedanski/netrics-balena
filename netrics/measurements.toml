@@ -1,3 +1,6 @@
+[speed]
+schedule = "*/3 * * * *"
+
 [ping]
 schedule = "*/1 * * * *"
 
