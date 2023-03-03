@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+speedtest -f json -u Mbps --accept-gdpr --accept-license
+
+case $? in
+0)
+    exit 0 # Finished correctly
+    ;;
+*)
+    exit 1
+    ;;
+esac
+    
+
