@@ -22,9 +22,10 @@ def lambda_handler(parse_func, upload_func, event, context):
     key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
 
 
+
     HOST = os.environ.get("DB_HOST")
     PORT = os.environ.get("DB_PORT")
-    DATABASE= os.environ.get("DB_NANE")
+    DATABASE= os.environ.get("DB_NAME")
     USER = os.environ.get("DB_USERNAME")
     PASSWORD = os.environ.get("DB_PASSWORD") 
 
@@ -33,18 +34,17 @@ def lambda_handler(parse_func, upload_func, event, context):
         port=PORT,
         dbname=DATABASE,
         user=USER,
-        password=PASSWORD
+        password=PASSWORD,
+        # connect_timeout=2
     )
 
-    try:
+    print("Connection created succesfuly")
 
-        response = s3.get_object(Bucket=bucket, Key=key)
-        body = json.loads(response["Body"].read())
-        parsed_data = parse_func(key, body)
 
-        upload_func(parsed_data, con)
+
+    response = s3.get_object(Bucket=bucket, Key=key)
+    body = json.loads(response["Body"].read())
+    parsed_data = parse_func(key, body)
+
+    upload_func(parsed_data, con)
         
-    except Exception as e:
-        print(e)
-        print('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same region as this function.'.format(key, bucket))
-        raise e

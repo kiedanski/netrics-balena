@@ -38,19 +38,12 @@ function upload() {
     in
         0)
             echo "File $path$file uploaded to s3://$BUCKET/$mode/$HOSTNAME$target$file"
-            delete "$path$file"
+            rm "$path$file"
         ;;
         *)
             echo "File $path$file upload failed"
         ;;
     esac
-}
-function delete() {
-    local path=$1
-    local file=$2
-    local target=${path:$len}
-
-    aws s3 rm s3://$BUCKET$target$file
 }
 
 # init
