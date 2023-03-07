@@ -1,2 +1,6 @@
 .balena/balena.yml
 .balena/secrets/
+
+.DS_Store
+lambdas/lib
+lambdas/lambda_function.zip
