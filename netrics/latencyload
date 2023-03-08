@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# We create temporary directories to store the outputs of both commands
+tmp_ping=$(mktemp)
+tmp_speed=$(mktemp)
+
+TARGET="www.google.com"
+SLEEP=0.5
+
+# We start ping before starting speedtest and store its pid to kill it later
+# We run ping in the background
+ping -D $TARGET > $tmp_ping 2>/dev/null &
+ping_pid=$!
+
+# give ping some time to run pings without load
+sleep $SLEEP
+
+# We start speedtest and save its output as json lines
+# Notie that we wait for it to finish
+speedtest -f json -p yes --accept-license > $tmp_speed 2>/dev/null
+
+# Once speedtest finished, we kill ping
+# but first we let ping run some time without load again
+sleep $SLEEP
+kill -SIGINT $ping_pid
+
+# Wait some time for ping to exit and write results
+# Then we parse results as json using jc and merge them with speedtest
+sleep 1
+cat $tmp_ping | jc --ping >> $tmp_speed
+
+# Finally we output all data to stdout
+cat $tmp_speed
+exit 0

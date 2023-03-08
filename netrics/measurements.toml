@@ -1,6 +1,9 @@
 [speed]
 schedule = "*/3 * * * *"
 
+[latencyload]
+schedule = "*/3 * * * *"
+
 [ping]
 schedule = "*/1 * * * *"
 
@@ -16,13 +19,4 @@ destinations = [
     "twitter.com",
 ]
 
-
-[traceroute]
-schedule = "*/1 * * * *"
-
-[traceroute.param]
-targets = [
-    "1.1.1.1",
-    "nytimes.com",
-]
 
