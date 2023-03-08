@@ -30,5 +30,4 @@ sleep 1
 cat $tmp_ping | jc --ping >> $tmp_speed
 
 # Finally we output all data to stdout
-cat $tmp_speed | jq
-exit 0
+jq -s '.' $tmp_speed
