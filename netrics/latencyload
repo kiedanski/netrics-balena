@@ -5,7 +5,7 @@ tmp_ping=$(mktemp)
 tmp_speed=$(mktemp)
 
 TARGET="www.google.com"
-SLEEP=0.5
+SLEEP=2
 
 # We start ping before starting speedtest and store its pid to kill it later
 # We run ping in the background
