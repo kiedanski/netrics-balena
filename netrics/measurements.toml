@@ -9,7 +9,7 @@ target = "www.wikipedia.com"
 sleep_time = 3
 
 [bashping]
-schedule = "*2-59/10 * * * *"
+schedule = "2-59/10 * * * *"
 
 [bash.param]
 targets = [
