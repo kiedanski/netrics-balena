@@ -1,3 +1,2 @@
 [bashping]
-schedule = "*/2 * * * *"
-param = {targets = ["google.com", "netflix.com", "nytimes.com"], reps = 3}
+schedule = "/2 * * * *"

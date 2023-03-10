@@ -1,20 +1,11 @@
 #!/usr/bin/env bash
 
-######################
-# ./<this.sh> '{"target": "www.wikipedia.com, "sleep": 3}'
-######################
+
+# Parameters of the execution
+target="www.wikipedia.com"
+sleep_time=2
 
 # We create temporary directories to store the outputs of both commands
-target=$(echo "$@" | jq -r '.target')
-if [ -z "$reps" ]; then
-    target="www.google.com"
-fi
-
-sleep_time=$(echo "$@" | jq -r '.sleep')
-if [ -z "$reps" ]; then
-    sleep_time=2
-fi
-
 tmp_ping=$(mktemp)
 tmp_speed=$(mktemp)
 
