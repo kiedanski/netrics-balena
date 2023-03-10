@@ -6,6 +6,8 @@ RUN apt-get install -y speedtest
 
 
 RUN pip install --upgrade pip && pip install --no-cache-dir netrics-measurements
+
 COPY defaults.toml measurements.toml /root/.config/netrics/
 COPY ookla /usr/local/bin/netrics-speed
 COPY latencyload /usr/local/bin/netrics-latencyload
+COPY bashping /usr/local/bin/netrics-bashping

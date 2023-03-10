@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+targets="www.wikipedia.com www.google.com www.amazon.com"
+reps=3
+
+
+tmpfile=$(mktemp)
+
+for t in ${targets[*]};
+do
+    var=$(ping -D -c $reps $t | jc --ping)
+    echo $var | jq --arg val "$t" '. += {target: $val}' >> $tmpfile
+done
+
+jq -s "." $tmpfile

@@ -4,3 +4,6 @@
 .DS_Store
 lambdas/lib
 lambdas/lambda_function.zip
+
+netrics/.balena
+uploads3/.balena
