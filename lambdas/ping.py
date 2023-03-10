@@ -1,4 +1,5 @@
 from utils import parse_filename
+from queries import ping_query
 
 def parse(filename, content):
 
@@ -17,8 +18,7 @@ def parse(filename, content):
 
 
 def upload(records, conn):
-    query = "INSERT INTO public.ping (hostname, date, target, metric, value) VALUES(%s,%s,%s,%s,%s) ON CONFLICT (hostname, date, target, metric) DO UPDATE SET (value) = ROW(EXCLUDED.value)"
     cur = conn.cursor()
-    cur.executemany(query, records)
+    cur.executemany(ping_query, records)
     conn.commit()
     conn.close()

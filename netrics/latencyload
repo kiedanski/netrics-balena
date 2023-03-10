@@ -1,19 +1,30 @@
 #!/usr/bin/env bash
 
+######################
+# ./<this.sh> '{"target": "www.wikipedia.com, "sleep": 3}'
+######################
+
 # We create temporary directories to store the outputs of both commands
+reps=$(echo "$@" | jq -r '.target')
+if [ -z "$reps" ]; then
+    target="www.google.com"
+fi
+
+sleep_time=$(echo "$@" | jq -r '.sleep')
+if [ -z "$reps" ]; then
+    sleep_time=2
+fi
+
 tmp_ping=$(mktemp)
 tmp_speed=$(mktemp)
 
-TARGET="www.google.com"
-SLEEP=2
-
 # We start ping before starting speedtest and store its pid to kill it later
 # We run ping in the background
-ping -D $TARGET > $tmp_ping 2>/dev/null &
+ping -D $target > $tmp_ping 2>/dev/null &
 ping_pid=$!
 
 # give ping some time to run pings without load
-sleep $SLEEP
+sleep $sleep_time
 
 # We start speedtest and save its output as json lines
 # Notie that we wait for it to finish
@@ -21,13 +32,14 @@ speedtest -f json -p yes --accept-license > $tmp_speed 2>/dev/null
 
 # Once speedtest finished, we kill ping
 # but first we let ping run some time without load again
-sleep $SLEEP
+sleep $sleep_time
 kill -SIGINT $ping_pid
 
 # Wait some time for ping to exit and write results
 # Then we parse results as json using jc and merge them with speedtest
 sleep 1
-cat $tmp_ping | jc --ping >> $tmp_speed
+var_ping=$(cat $tmp_ping | jc --ping)
+echo $var_ping | jq --arg val "$target" '. += {target: $val}' >> $tmp_speed
 
 # Finally we output all data to stdout
 jq -s '.' $tmp_speed

@@ -28,3 +28,5 @@ CREATE TABLE public.speed (
 );
 
 ALTER TABLE public.speed ADD PRIMARY KEY (hostname, date);
+
+ALTER TABLE public.speed ADD COLUMN "under_load" BOOLEAN DEFAULT FALSE;

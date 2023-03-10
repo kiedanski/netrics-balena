@@ -1,6 +1,8 @@
 import datetime
 from collections import defaultdict
 from utils import parse_filename
+from queries import latency_query, speed_query
+from speed import parse as speed_parse
 
 def parse(filename, content):
 
@@ -37,12 +39,20 @@ def parse(filename, content):
 
         records.append((hostname, date, ts, el["time_ms"], mode))
 
-    return records
+    speed_dict = next(filter(lambda x: "type" in x and x["type"] == "result", content))
+
+
+    final = {
+        "ping": records,
+        "speed": speed_parse(filename, speed_dict, under_load=True),
+    }
+
+    return final
 
 
 def upload(records, conn):
-    query = "INSERT INTO public.latencyload (hostname, date, step_date, duration, condition) VALUES(%s,%s,%s,%s,%s) ON CONFLICT (hostname, date, step_date) DO UPDATE SET (duration, condition) = ROW(EXCLUDED.duration, EXCLUDED.condition)"
     cur = conn.cursor()
-    cur.executemany(query, records)
+    cur.executemany(latency_query, records["ping"])
+    cur.execute(speed_query, records["speed"])
     conn.commit()
     conn.close()

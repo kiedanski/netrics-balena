@@ -1,6 +1,7 @@
 from utils import parse_filename
+from queries import speed_query
 
-def parse(filename, content):
+def parse(filename, content, under_load=False):
 
     hostname, date = parse_filename(filename)
 
@@ -29,12 +30,12 @@ def parse(filename, content):
         content.get("packetloss", -1),
         content["result"]["id"],
         content["server"]["id"],
+        under_load
     )
 
 
 def upload(record, conn):
-    q = "INSERT INTO public.speed VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     cur = conn.cursor()
-    cur.execute(q, record)
+    cur.execute(speed_query, record)
     conn.commit()
     conn.close()

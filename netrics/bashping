@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Sends pings and gets the output as a json
+# Reads parameters from the command line in the following format
+
+######################
+# ./<this.sh> '{"targets": ["www.wikipedia.com", "www.amazon.com"], "reps": 3}'
+######################
+
+
+# Get targets
+targets=$(echo "$@" | jq -r '.targets | join(" ")')
+if [ -z "$targets" ]; then
+    targets="www.google.com"
+fi
+
+# Get number of repetitions
+reps=$(echo "$@" | jq -r '.reps')
+if [ -z "$reps" ]; then
+    reps=1
+fi
+
+tmpfile=$(mktemp)
+
+for t in ${targets[*]};
+do
+    var=$(ping -D -c $reps $t | jc --ping)
+    echo $var | jq --arg val "$t" '. += {target: $val}' >> $tmpfile
+done
+
+jq -s "." $tmpfile
