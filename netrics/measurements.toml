@@ -3,26 +3,8 @@ schedule = "0-59/10 * * * *"
 
 [latencyload]
 schedule = "5-59/10 * * * *"
-
-[latencyload.param]
-target = "www.wikipedia.com"
-sleep_time = 3
+param = {target = "www.wikipedia.com", sleep_time = 3}
 
 [bashping]
 schedule = "2-59/10 * * * *"
-
-[bashping.param]
-targets = [
-    "google.com",
-    "netflix.com",
-    "nytimes.com",
-    "facebook.com",
-    "reddit.com",
-    "github.com",
-    "linkedin.com",
-    "twitter.com",
-]
-reps = 3
-
-
-
+param = {targets = ["google.com", "netflix.com", "nytimes.com"], reps = 3}

@@ -5,7 +5,7 @@
 ######################
 
 # We create temporary directories to store the outputs of both commands
-reps=$(echo "$@" | jq -r '.target')
+target=$(echo "$@" | jq -r '.target')
 if [ -z "$reps" ]; then
     target="www.google.com"
 fi

@@ -6,6 +6,7 @@
 # ./<this.sh> '{"targets": ["www.wikipedia.com", "www.amazon.com"], "reps": 3}'
 ######################
 
+echo "$@"
 
 # Get targets
 targets=$(echo "$@" | jq -r '.targets | join(" ")')
