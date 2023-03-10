@@ -1,5 +1,2 @@
-[bashping]
-schedule = "5-59/10 * * * *"
-
 [latencyload]
-schedule = "0-59/10 * * * *"
+schedule = "*/2 * * * *"

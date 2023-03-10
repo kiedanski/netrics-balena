@@ -19,7 +19,7 @@ sleep $sleep_time
 
 # We start speedtest and save its output as json lines
 # Notie that we wait for it to finish
-speedtest -f json -p yes --accept-license > $tmp_speed 2>/dev/null
+speedtest -f json -p yes --accept-gdpr --accept-license > $tmp_speed 2>/dev/null
 
 # Once speedtest finished, we kill ping
 # but first we let ping run some time without load again
@@ -29,8 +29,7 @@ kill -SIGINT $ping_pid
 # Wait some time for ping to exit and write results
 # Then we parse results as json using jc and merge them with speedtest
 sleep 1
-var_ping=$(cat $tmp_ping | jc --ping)
-echo $var_ping | jq --arg val "$target" '. += {target: $val}' >> $tmp_speed
+cat $tmp_ping | jc --ping | jq --arg val "$target" '. += {target: $val}' >> $tmp_speed
 
 # Finally we output all data to stdout
 jq -s '.' $tmp_speed
