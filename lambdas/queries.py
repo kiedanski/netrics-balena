@@ -13,8 +13,8 @@ DO UPDATE SET (ping_jitter, ping_latency, ping_low, ping_high, download_bandwidt
 
 
 ping_query = """INSERT INTO public.ping 
-(hostname, date, target, metric, value) VALUES(%s,%s,%s,%s,%s) 
-ON CONFLICT (hostname, date, target, metric) 
-DO UPDATE SET (value) = ROW(EXCLUDED.value)"""
+(hostname, date, target, step_time, rtt, condition) VALUES(%s,%s,%s,%s,%s,%s) 
+ON CONFLICT (hostname, date, target, step_time) 
+DO UPDATE SET (rtt, condition) = ROW(EXCLUDED.rtt, EXCLUDED.condition)"""
 
 

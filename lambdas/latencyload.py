@@ -1,7 +1,7 @@
 import datetime
 from collections import defaultdict
 from utils import parse_filename
-from queries import latency_query, speed_query
+from queries import ping_query, speed_query
 from speed import parse as speed_parse
 
 def parse(filename, content):
@@ -35,9 +35,9 @@ def parse(filename, content):
         elif ts >= ts_ranges["upload"]["start"] and ts <= ts_ranges["upload"]["end"]:
             mode = "upload"
         else:
-            mode = None
+            mode = "before-after"
 
-        records.append((hostname, date, ts, el["time_ms"], mode))
+        records.append((hostname, date, ping_data["target"], ts, el["time_ms"], mode))
 
     speed_dict = next(filter(lambda x: "type" in x and x["type"] == "result", content))
 
@@ -52,7 +52,7 @@ def parse(filename, content):
 
 def upload(records, conn):
     cur = conn.cursor()
-    cur.executemany(latency_query, records["ping"])
+    cur.executemany(ping_query, records["ping"])
     cur.execute(speed_query, records["speed"])
     conn.commit()
     conn.close()

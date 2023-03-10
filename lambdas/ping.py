@@ -1,18 +1,22 @@
 from utils import parse_filename
 from queries import ping_query
+import datetime
 
 def parse(filename, content):
 
-    m = content["Measurements"]["ping_latency"]
     hostname, date = parse_filename(filename)
 
-    records = []
-    for key, value in m.items():
-        target = key.split("_")[0]
-        metric = key.replace(target + "_", "")
+    mode = "noload"
 
-        r = (hostname, date, target, metric, float(value))
-        records.append(r)
+    records = []
+    for ping in content:
+        target = ping["target"]
+        for el in ping["responses"]:
+
+            ts = el["timestamp"]
+            ts = datetime.datetime.utcfromtimestamp(ts)
+
+            records.append((hostname, date, target, ts, el["time_ms"], mode))
 
     return records
 
