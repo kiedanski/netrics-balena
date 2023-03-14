@@ -2,9 +2,9 @@ DROP TABLE public.ping;
 
 CREATE TABLE public.ping (
     hostname varchar(15),
-    date timestamp,
+    date timestamp with time zone,
     target varchar(50),
-    step_time timestamp,
+    step_time timestamp with time zone,
     rtt real,
     condition varchar(20)
 
