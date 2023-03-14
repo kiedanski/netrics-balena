@@ -2,7 +2,7 @@ DROP TABLE public.speed;
 
 CREATE TABLE public.speed (
     hostname varchar(15),
-    date timestamp,
+    date timestamp with time zone,
     ping_jitter float,
     ping_latency float,
     ping_low float,

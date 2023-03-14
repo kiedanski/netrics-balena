@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-targets="www.wikipedia.com www.google.com www.amazon.com"
-reps=3
-
+SPEED_TARGETS="${LATENCY_TARGET-www.wikipedia.org} ${SPEED_TARGETS:-www.google.com}"
+SPEED_REPS=${SPEED_REPS:-3}
 
 tmpfile=$(mktemp)
 
-for t in ${targets[*]};
+for t in ${SPEED_TARGETS[*]};
 do
-    var=$(ping -D -c $reps $t | jc --ping)
+    var=$(ping -D -c $SPEED_REPS $t | jc --ping)
     echo $var | jq --arg val "$t" '. += {target: $val}' >> $tmpfile
 done
 

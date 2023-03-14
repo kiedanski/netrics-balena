@@ -10,7 +10,7 @@ s3 = boto3.client('s3')
 def parse_filename(filename):
     hostname = filename.split("/")[1]
     date_str = filename.split("-")[2]
-    date = datetime.datetime.strptime(date_str, "%Y%m%dT%H%M%S")
+    date = datetime.datetime.strptime(date_str, "%Y%m%dT%H%M%S").replace(tzinfo=datetime.timezone.utc)
     return hostname, date
 
 
