@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SPEED_TARGETS="${LATENCY_TARGET-www.wikipedia.org} www.google.com"
+SPEED_TARGETS="${LATENCY_TARGET-www.wikipedia.org} ${SPEED_TARGETS:-www.google.com}"
 SPEED_REPS=${SPEED_REPS:-3}
 
 tmpfile=$(mktemp)

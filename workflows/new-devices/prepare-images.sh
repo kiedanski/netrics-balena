@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mkdir -p flashed_images
+mkdir -p images_to_flash
 for f in $(ls config/*.json);
 do
 	name=$(basename $f .json)
@@ -17,6 +17,6 @@ do
 	sudo balena config inject $f --drive "$name.img" > /dev/null
 	tar -czvf "$name-$version.tar.gz" "$name.img" > /dev/null
 	rm "$name.img"
-	mv "$name-$version.tar.gz" flashed_images/
+	mv "$name-$version.tar.gz" images_to_flash/
 
 done

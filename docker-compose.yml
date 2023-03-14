@@ -11,8 +11,6 @@ services:
     volumes:
       - data:/tmp/results
     restart: always
-    env_file:
-      - variables.env
 
   server:
     build:
@@ -20,6 +18,4 @@ services:
     network_mode: host
     volumes:
       - data:/data
-    env_file:
-      - variables.env
 

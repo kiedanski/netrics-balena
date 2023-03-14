@@ -1,4 +1,3 @@
-# FROM python:3.10 as builder 
 FROM python:3.10-slim
 
 RUN apt-get update && apt-get install -y curl iputils-ping git scamper dnsutils vim gcc jc jq && apt-get clean autoclean
