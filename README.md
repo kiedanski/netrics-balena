@@ -1,5 +1,6 @@
-# Netrics experiments for balenaOS 
+# netmicroscope / open-balena deployment
 
-# Install
 
-Run `balena deploy <fleetname> --build`
+This is the main repository used for the 2023 active measurement camapaing.
+
+More details about the campagain...
