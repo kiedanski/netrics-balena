@@ -17,7 +17,7 @@
 FLEET="netrics-fleet"
 BALENA_VERSION="2.12.7"
 
-mkdir -p configs
+mkdir -p config
 
 printf '['
 while IFS=',' read -r name uuid version
@@ -36,7 +36,7 @@ do
   	--output "config/$name.json" \
 	--appUpdatePollInterval 15 > /dev/null
 
-	cat "config/$name.json" jq --arg keyvar "$(cat ~/.ssh/id_rsa.pub)" '. + {"os": {"sshKeys": [$keyvar]}}' > "config/$name.json"
+	cat "config/$name.json" | jq --arg keyvar "$(cat ~/.ssh/id_rsa.pub)" '. + {"os": {"sshKeys": [$keyvar]}}' > "config/$name.json"
 
 
 done < users.csv
