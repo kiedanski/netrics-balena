@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ -f "users.csv"] && mv "users.csv" "users.csv.bkp"
+[ -f "users.csv" ] && mv "users.csv" "users.csv.bkp"
 touch users.csv
 
 for i in $(seq 1 20); do
