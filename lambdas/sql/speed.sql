@@ -24,9 +24,8 @@ CREATE TABLE public.speed (
     isp varchar(200),
     packetloss int,
     result_id varchar(200),
-    server_id int
+    server_id int,
+    under_load boolean default false
 );
 
 ALTER TABLE public.speed ADD PRIMARY KEY (hostname, date);
-
-ALTER TABLE public.speed ADD COLUMN "under_load" BOOLEAN DEFAULT FALSE;
